@@ -1,50 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 >
 
-    <RelativeLayout
+
+
+    <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/navigation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:id="@+id/button1"
-        android:text="キャンパス発"
-        />
-
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:text="時間を指定"
-        android:layout_below="@+id/button1"/>
-
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:layout_below="@+id/button2"
-                  android:layout_centerHorizontal="true"
-                  android:layout_centerVertical="true"
-                  android:id="@+id/direction"
-        android:text="北口"/>
-
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:id="@+id/timeShow"
-                  android:textSize="24sp"
-                  android:text="1:23"
-                  android:layout_below="@+id/direction"
-                  android:layout_centerHorizontal="true"
-                  android:layout_centerVertical="true"
-
-        />
-
-    <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/navigation"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    />
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="wrap_content"
@@ -59,6 +31,4 @@
             app:menu="@menu/navigation"/>
 
 
-    </RelativeLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.constraint.ConstraintLayout>

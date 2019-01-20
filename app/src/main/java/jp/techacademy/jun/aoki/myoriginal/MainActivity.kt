@@ -11,14 +11,17 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 //message.setText(R.string.title_home)
+                supportFragmentManager.beginTransaction().replace(R.id.frameLayout,HomeFragment()).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
                 //message.setText(R.string.title_dashboard)
+                supportFragmentManager.beginTransaction().replace(R.id.frameLayout,DashboardFragment()).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                // message.setText(R.string.title_notifications)
+                supportFragmentManager.beginTransaction().replace(R.id.frameLayout,NavigationFragment()).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -30,5 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        //set firstfragment
+        //supportFragmentManager.beginTransaction().replace(R.id.frameLayout,NavigationFragment()).commit()
     }
 }
