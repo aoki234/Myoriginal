@@ -1,66 +1,42 @@
 package jp.techacademy.jun.aoki.myoriginal
 
-import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 
-public class RecyclerFragment : Fragment, OnRecyclerListener {
+public class RecyclerFragment : AppCompatActivity() {
 
-    private Activity mActivity = null;
-    private View mView;
-    private RecyclerFragmentListener mFragmentListener = null;
+    var TextList: ArrayList<String> = ArrayList()
+    private var mRecyclerView: RecyclerView? = null
 
-    // RecyclerViewとAdapter
-    private RecyclerView mRecyclerView = null;
-    private RecyclerAdapter mAdapter = null;
 
-    public interface RecyclerFragmentListener {
-        void onRecyclerEvent();
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    setContentView(R.layout.fragment_navigations)
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof RecyclerFragmentListener)) {
-            throw new UnsupportedOperationException(
-                    "Listener is not Implementation.");
-        } else {
-            mFragmentListener = (RecyclerFragmentListener) activity;
-        }
-        mActivity = activity;
-    }
+        mRecyclerView = findViewById<RecyclerView>(R.id.recycler_view);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment, container, false);
+    addDiary()
 
-        // RecyclerViewの参照を取得
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
-        // レイアウトマネージャを設定(ここで縦方向の標準リストであることを指定)
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+    mRecyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        return mView;
-    }
+    mRecyclerView!!.adapter = FragmentAdapter(TextList)
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+}
 
-        // 適当にデータ作成
-        ArrayList<String> array = new ArrayList<>();
-        array.add("A");
-        array.add("B");
-        array.add("C");
-
-        // この辺りはListViewと同じ
-        // 今回は特に何もしないけど、一応クリック判定を取れる様にする
-        mAdapter = new RecyclerAdapter(mActivity, array, this);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onRecyclerClicked(View v, int position) {
-        // セルクリック処理
-    }
+fun addDiary() {
+    TextList.add("diary1")
+    TextList.add("diary2")
+    TextList.add("diary3")
+    TextList.add("diary4")
+    TextList.add("diary5")
+    TextList.add("diary6")
+    TextList.add("diary7")
+    TextList.add("diary8")
+    TextList.add("diary10")
+    TextList.add("diary11")
+    TextList.add("diary12")
+    TextList.add("diary13")
+}
+}
