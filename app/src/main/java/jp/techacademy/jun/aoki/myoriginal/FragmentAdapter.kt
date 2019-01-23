@@ -3,15 +3,22 @@ package jp.techacademy.jun.aoki.myoriginal
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class FragmentAdapter(private val myDataset: ArrayList<String>) :
+class FragmentAdapter(private val myDataset: ArrayList<String>,private val myDataset2: ArrayList<String>) :
     RecyclerView.Adapter<FragmentAdapter.ViewHolder>() {
 
-    // RecyclerViewの一要素となるXML要素の型を引数に指定する
-    // この場合はdiary_list_item.xmlのTextView
-    class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+
+    class ViewHolder(val parentView: View) : RecyclerView.ViewHolder(parentView) {
+        var textView: TextView
+        var textView2:TextView
+        init {
+            textView = parentView.findViewById(R.id.text_view)
+            textView2 = parentView.findViewById(R.id.text_view2)
+        }
+    }
 
     init {
         Log.d("debug2",myDataset.size.toString())
@@ -19,21 +26,22 @@ class FragmentAdapter(private val myDataset: ArrayList<String>) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FragmentAdapter.ViewHolder {
-        val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item, parent, false) as TextView
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_item, parent, false)
 
-        Log.d("debug2",textView.toString())
+        //Log.d("debug2",textView.toString())
 
-        return ViewHolder(textView)
+        return ViewHolder(itemView)
     }
 
     // 第１引数のViewHolderはこのファイルの上のほうで作成した`class ViewHolder`です。
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = myDataset[position]
+        holder.textView2.text = myDataset2[position]
 
         Log.d("debug2",myDataset.size.toString())
 
-        Log.d("debug2",holder.textView.text.toString())
+        //Log.d("debug2",holder.textView.text.toString())
     }
 
     override fun getItemCount() : Int { return myDataset.size }
