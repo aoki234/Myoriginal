@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.gson.Gson
+import java.io.InputStream
 
 class NavigationFragment : Fragment() {
 
@@ -16,6 +18,7 @@ class NavigationFragment : Fragment() {
     var TextList2: ArrayList<String> = ArrayList()
     private var mRecyclerView: RecyclerView? = null
     private var mDirectionButton: Button? = null
+    var gson:Gson? = null
     //var array:Array<Array<String>> = arrayOf(3, arrayOf(("北口","08時00分00"),("北口","08時04分00"),("北口","08時08分00")))
 
     //var BusList = listOf<Array<String>>(("北口","08時00分00"),("北口","08時04分00"))
@@ -69,6 +72,18 @@ class NavigationFragment : Fragment() {
 
         Log.d("debug","addDiary called")
 
+        gson = Gson()
+
+        //val message = context!!.assets.open("test.json").reader(charset=Charsets.UTF_8)
+
+        var message = readJSONFromAsset()
+
+        Log.d("debug3",message.toString())
+
+        var bus : Bus = gson!!.fromJson(message, Bus::class.java)
+        //println(person1)
+        Log.d("debug3",bus.toString())
+
         TextList.add("1")
         TextList.add("diary2")
         TextList.add("diary3")
@@ -100,5 +115,33 @@ class NavigationFragment : Fragment() {
         TextList2.add("diary12")
         TextList2.add("diary13")
     }
+
+
+    //var obj = JSONObject(readJSONFromAsset())
+
+    fun readJSONFromAsset(): String? {
+        var json: String? = null
+        try {
+            val  inputStream: InputStream = context!!.getAssets().open("test.json")
+            //json = inputStream.bufferedReader().use{it.readText()}
+            val size = inputStream.available()
+
+            val buffer = ByteArray(size)
+
+            inputStream.read(buffer)
+
+            inputStream.close()
+
+            json = buffer.toString()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            return null
+        }
+        return json
+    }
+
 }
+
+
+
 
