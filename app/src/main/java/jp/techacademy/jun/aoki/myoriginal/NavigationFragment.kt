@@ -126,9 +126,13 @@ class NavigationFragment : Fragment() {
             //json = inputStream.bufferedReader().use{it.readText()}
             val size = inputStream.available()
 
+            Log.d("debug3",inputStream.toString())
+
             val buffer = ByteArray(size)
 
             inputStream.read(buffer)
+            Log.d("debug3",buffer.toString())
+
 
             inputStream.close()
 
