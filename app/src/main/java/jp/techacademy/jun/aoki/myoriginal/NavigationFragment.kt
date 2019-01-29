@@ -131,7 +131,7 @@ class NavigationFragment : Fragment() {
             val buffer = ByteArray(size)
 
             inputStream.read(buffer)
-            Log.d("debug3",buffer.toString())
+            Log.d("debug3",inputStream.toString())
 
 
             inputStream.close()
