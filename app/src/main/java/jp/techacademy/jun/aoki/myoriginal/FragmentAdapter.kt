@@ -21,7 +21,7 @@ class FragmentAdapter(private val myDataset: ArrayList<String>,private val myDat
     }
 
     init {
-        Log.d("debug2",myDataset.size.toString())
+       // Log.d("debug2",myDataset.size.toString())
     }
 
 

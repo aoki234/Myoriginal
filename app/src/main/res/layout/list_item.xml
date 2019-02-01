@@ -11,6 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:textStyle="bold"
+        android:textSize="40dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
         xmlns:android="http://schemas.android.com/apk/res/android"/>
 
 
@@ -19,6 +22,9 @@ android:id="@+id/text_view2"
 android:layout_width="match_parent"
 android:layout_height="150dp"
 android:textStyle="bold"
+android:textSize="40dp"
+android:layout_gravity="center_horizontal"
+android:gravity="center_horizontal"
 xmlns:android="http://schemas.android.com/apk/res/android"/>
 
 </LinearLayout>
