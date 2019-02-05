@@ -16,6 +16,8 @@ import java.io.InputStream
 import java.util.*
 
 
+
+
 class NavigationFragment : Fragment() {
 
     var TextList: ArrayList<String> = ArrayList()
@@ -187,6 +189,49 @@ class NavigationFragment : Fragment() {
         changeTimeCell(currenthour,currentminute)
     }
 
+
+
+
+/*
+    private fun makeS3Client(accessKey:String, accessSecretKey:String): AmazonS3Client {
+
+        // 認証オブジェクトを作成
+        var credentials:AWSCredentials = BasicAWSCredentials(accessKey, accessSecretKey);
+
+        // ConfigurationでTimeout時間を30秒に設定
+        var clientConfiguration:ClientConfiguration? = null
+        clientConfiguration!!.setConnectionTimeout(30000);
+
+        // AmazonS3Clientをインスタンス化
+        return AmazonS3Client(credentials, clientConfiguration);
+    }
+
+
+    fun getObject(bucketName: String, objectKey: String): S3ObjectInputStream? {
+        // AmazonS3Clientインスタンスを作成
+        val cli = makeS3Client(bucketName,objectKey)
+
+        // エンドポイントを設定
+        cli.setEndpoint(ENDPOINT)
+
+        // rootDirectory(Bucket名), objectKey(オブジェクトまでの相対パス)からリクエストを作成
+        val request:GetObjectRequest = GetObjectRequest(bucketName, objectKey)
+
+        //var object:S3Object =
+
+        // Objectを開いたInputStreamを返す
+        Log.d("debug9",cli.getObject(request).objectContent.toString())
+        return cli.getObject(request).objectContent
+    }
+
+
+    fun connect() {
+
+        makeS3Client(accessKey,sercretkey)
+        getObject("bussample","")
+
+
+    }*/
 }
 
 
