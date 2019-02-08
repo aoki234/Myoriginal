@@ -1,10 +1,10 @@
 package jp.techacademy.jun.aoki.myoriginal
 
-import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class Bus(
+class Bus(
     var direction: String,
-    var time: String,
-    @SerializedName("has_family")
-    val hasFamily: Boolean
-)
+    var time: String
+    //@SerializedName("has_family")
+    //val hasFamily: Boolean
+): Serializable
