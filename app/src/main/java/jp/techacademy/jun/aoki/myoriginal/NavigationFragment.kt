@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,13 +20,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
+
 class NavigationFragment : Fragment() {
 
 
     private var mRecyclerView: RecyclerView? = null
     private var mDirectionButton: Button? = null
-    private var mTimerButton: Button? = null
-    //var bus: List<Bus>? = null
+    private var mTimerButton:Button? = null
+
     //var gson: Gson? = null
     //var json: String? = null
     var hourArray: ArrayList<String> = ArrayList()
@@ -37,23 +39,18 @@ class NavigationFragment : Fragment() {
     val currentminute = c.get(Calendar.MINUTE)
 
     private var mDeparture:String = "campus"
+    private lateinit var pd: ProgressBar
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
         val v = inflater.inflate(R.layout.fragment_navigations, container, false)
 
         mRecyclerView = v.findViewById(R.id.recycler_view)
-
+        pd = v.findViewById(R.id.progressBar)
 
         getBusdatas(mDeparture)
-
-        //Log.d("debug_data5",busArrayList.toString())
-        //バスの発車口、時刻をRecycterViewで表示する
-        //addDiary()
-        //addDiary2()
 
 
         mDirectionButton = v.findViewById(R.id.button1)
@@ -61,13 +58,10 @@ class NavigationFragment : Fragment() {
             changeDdirection()
         }
 
-        mTimerButton = v.findViewById<Button>(R.id.button2)
+       mTimerButton = v.findViewById<Button>(R.id.button2)
         mTimerButton!!.setOnClickListener {
             showTimePickerDialog()
         }
-
-
-
         return v //inflater.inflate(R.layout.fragment_navigations, container, false)
 
     }
@@ -79,7 +73,7 @@ class NavigationFragment : Fragment() {
         Log.d("debug", "addDiary called")
 
         for (count in busArrayList) {
-           
+
             TextList.add(count.direction)
         }
         return TextList
@@ -89,12 +83,10 @@ class NavigationFragment : Fragment() {
 
         var TextList2: ArrayList<String> = ArrayList()
         Log.d("debug", "addDiary2 called")
-        //busparser()Log.d("debug_data3", count.time.toString())
-        Log.d("debug_data3", busArrayList.toString())
 
         for (count in busArrayList) {
 
-            Log.d("debug_data3", count.time.toString())
+            //Log.d("debug_data3", count.time.toString())
             TextList2.add(count.time)
 
             var time = count.time.split(Regex("[^0-9]"))
@@ -144,13 +136,8 @@ class NavigationFragment : Fragment() {
             mDirectionButton!!.setText("小手指駅発")
 
             mDeparture = "kotesashi"
-
-
-
-
         } else {
             mDirectionButton!!.setText("キャンパス発")
-
             mDeparture = "campus"
         }
         getBusdatas(mDeparture)
@@ -171,7 +158,6 @@ class NavigationFragment : Fragment() {
             currenthour, currentminute, false
         )
         timePickerDialog.show()
-
     }
 
 
@@ -180,7 +166,6 @@ class NavigationFragment : Fragment() {
         if(hourArray != null && minuteArray != null) {
             for (x in hourArray.indices) {
                 //設定した時刻を表示するための処理
-                //Log.d("debug6", x.toString())
 
                 //バスは必ず8時以降の発車となるため、早朝の時刻設定に対応した
                 if (hour >= 7 && hour <= hourArray[x].toInt()) {
@@ -196,12 +181,9 @@ class NavigationFragment : Fragment() {
                     }
                 } else {
                     //当日のバスが存在しない場合
-                    //Log.d("debug7", "time else called")
                     position = 0
                 }
             }
-
-
         (mRecyclerView!!.layoutManager as LinearLayoutManager).scrollToPosition(position)
 
         position =
@@ -215,9 +197,9 @@ class NavigationFragment : Fragment() {
 
     fun getBusdatas(departure:String){
 
-
         //バスのデータをサーバから取得する
         val mDataBaseReference = FirebaseDatabase.getInstance().reference.child(departure)
+        pd.visibility = View.VISIBLE
 
             mDataBaseReference.addListenerForSingleValueEvent(object: ValueEventListener{
                 override fun onDataChange(dataSnapshot: DataSnapshot){
@@ -230,8 +212,8 @@ class NavigationFragment : Fragment() {
                         var direction = it.child("direction").value as String
                         var time = it.child("time").value as String
 
-                        Log.d("firebase", time.toString())
                         val bus = Bus(direction, time)
+                        Log.d("firebase", bus.toString())
                         busArrayList.add(bus)
                     }
 
@@ -243,15 +225,13 @@ class NavigationFragment : Fragment() {
 
                     //最も現在時刻に近いバスの時刻を表示する
                     changeTimeCell(currenthour, currentminute)
-
+                    pd.visibility = View.INVISIBLE
                 }
 
                 override fun onCancelled(databaseError: DatabaseError){
 
                 }
-
             })
-
     }
 
 }

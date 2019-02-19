@@ -1,7 +1,6 @@
 package jp.techacademy.jun.aoki.myoriginal
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +38,7 @@ class FragmentAdapter(private val myDataset: ArrayList<String>,private val myDat
         holder.textView.text = myDataset[position]
         holder.textView2.text = myDataset2[position]
 
-        Log.d("debug2",myDataset.size.toString())
+        //Log.d("debug2",myDataset.size.toString())
 
         //Log.d("debug2",holder.textView.text.toString())
     }
