@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 
 
-class DashboardAdapter: BaseAdapter(){
+class HomeAdapter: BaseAdapter(){
 
     private var list = colors()
 
