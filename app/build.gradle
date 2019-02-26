@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'     // これを追加
+apply plugin: 'realm-android'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -42,6 +45,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.1' // この行を追加
     implementation 'com.google.firebase:firebase-database:16.0.1' // この行を追加
     implementation 'com.google.firebase:firebase-core:16.0.1'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services' // この行を追加

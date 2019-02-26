@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginVertical="1dp"
-        android:backgroundTintMode="screen"
+        android:background="#77ff"
         android:id="@+id/week_day">
 
 
@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="1dp"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="7dp"
             android:layout_weight="1"
             android:text="月"
 
@@ -79,6 +79,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/classes"
+            android:background="#77ff"
             android:layout_marginRight="2dp"
     >
 
@@ -94,7 +95,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="1.1dp"
                 android:layout_weight="1"
                 android:text="2"
                 android:textAlignment="center"/>
@@ -102,7 +103,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="1.1dp"
                 android:layout_weight="1"
                 android:text="3"
                 android:textAlignment="center"/>
@@ -111,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
+                android:layout_marginBottom="1.1dp"
                 android:layout_weight="1"
                 android:text="4"
                 android:textAlignment="center"/>
@@ -118,7 +120,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="1.1dp"
                 android:layout_weight="1"
                 android:text="5"
                 android:textAlignment="center"/>
@@ -131,6 +133,7 @@
             android:background="#888"
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
+            android:layout_marginLeft="1dp"
             android:numColumns="2"
             android:stretchMode="columnWidth" />
 

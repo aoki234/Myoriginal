@@ -1,20 +1,18 @@
 package jp.techacademy.jun.aoki.myoriginal
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import android.widget.Toast
 
 
 class HomeAdapter: BaseAdapter(){
 
-    private var list = colors()
+    var list = mutableListOf<Class>()
+    //var list2 = colors()
 
     override fun getView(position:Int, convertView: View?, parent: ViewGroup?):View{
         // Inflate the custom view
@@ -23,17 +21,27 @@ class HomeAdapter: BaseAdapter(){
         val view = inflater.inflate(R.layout.gridcell_layout,null)
 
         // Get the custom view widgets reference
-        val tv = view.findViewById<TextView>(R.id.tv_name)
-        val card = view.findViewById<CardView>(R.id.card_view)
+        var tv = view.findViewById<TextView>(R.id.tv_name)
+        //var card = view.findViewById<CardView>(R.id.card_view)
 
         // Display color name on text view
-        tv.text = list[position].first
+        tv.text = list[position].classtitle.toString()
 
         // Set background color for card view
-        card.setCardBackgroundColor(list[position].second)
+        //card.setCardBackgroundColor(list2[position].second)
+
+        // Get the activity reference from parent
+       // val activity  = parent.context as Activity
+
+        // Get the activity root view
+       // val viewGroup = activity.findViewById<ViewGroup>(android.R.id.content)
+           // .getChildAt(0)
+
+        //Change the root layout background color
+        //viewGroup.setBackgroundColor(list2[position].second)
 
         // Set a click listener for card view
-        card.setOnClickListener{
+        /*card.setOnClickListener{
             // Show selected color in a toast message
             Toast.makeText(parent.context,
                 "Clicked : ${list[position].first}",Toast.LENGTH_SHORT).show()
@@ -45,13 +53,29 @@ class HomeAdapter: BaseAdapter(){
             val viewGroup = activity.findViewById<ViewGroup>(android.R.id.content)
                 .getChildAt(0)
 
-            // Change the root layout background color
+             Change the root layout background color
             viewGroup.setBackgroundColor(list[position].second)
-        }
+
+            //mychange
+            val myedit: EditText = EditText(parent.context)
+
+            val dialog = AlertDialog.Builder(parent.context)
+            dialog.setTitle("授業名を入力してください")
+            dialog.setView(myedit)
+            dialog.setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
+                // OKボタン押したときの処理
+                val userText = myedit.getText().toString()
+                tv.text = userText
+                //Toast.makeText(this, "$userText と入力しました", Toast.LENGTH_SHORT).show()
+            })
+            dialog.setNegativeButton("キャンセル", null)
+            dialog.show()
+        }*/
 
         // Finally, return the view
         return view
     }
+
 
 
 
@@ -85,7 +109,7 @@ class HomeAdapter: BaseAdapter(){
             long : The id of the item at the specified position.
     */
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return list[position].id.toLong()
     }
 
 

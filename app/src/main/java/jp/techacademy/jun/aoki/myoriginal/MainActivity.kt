@@ -3,6 +3,7 @@ package jp.techacademy.jun.aoki.myoriginal
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_dashboard -> {
                 //message.setText(R.string.title_dashboard)
                 supportFragmentManager.beginTransaction().replace(R.id.frameLayout,DashboardFragment()).commit()
+                Log.d("debug","navigation called")
                 return@OnNavigationItemSelectedListener true
             }
 
@@ -36,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout,HomeFragment()).commit()
+
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
