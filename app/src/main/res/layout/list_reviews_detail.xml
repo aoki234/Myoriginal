@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="授業名："
+            android:id="@+id/classNameTextView"
+            android:inputType="textMultiLine"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="New Text"
+            android:id="@+id/classtitleTextView"
+            android:layout_toRightOf="@+id/classNameTextView"
+            android:inputType="textMultiLine"
+    />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="教員名："
+            android:id="@+id/teacherTitle"
+            android:layout_below="@+id/classNameTextView"
+            tools:ignore="UnknownId"
+            />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="new"
+            android:id="@+id/teacherTextView"
+            android:layout_below="@+id/classtitleTextView"
+            android:layout_toRightOf="@+id/teacherTitle"
+            tools:ignore="UnknownId"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+
+
+
+
+</RelativeLayout>

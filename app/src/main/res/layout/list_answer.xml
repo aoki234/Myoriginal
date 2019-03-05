@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="難易度："
+            android:id="@+id/levelTitle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="New Text"
+            android:id="@+id/levelTextView"
+            android:layout_toRightOf="@+id/levelTitle"
+            android:inputType="textMultiLine"
+
+    />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="面白さ："
+            android:id="@+id/interestTitle"
+            android:layout_below="@+id/levelTitle"
+            android:inputType="textMultiLine"
+
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="New Text"
+            android:id="@+id/interestTextView"
+            android:layout_toRightOf="@+id/interestTitle"
+            android:inputType="textMultiLine"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="レビュー"
+            android:id="@+id/reviewText"
+            android:layout_below="@+id/interestTitle"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="body"
+            android:id="@+id/bodyTextView"
+            android:layout_below="@+id/reviewText"
+            />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:id="@+id/nameTextView"
+            android:textFontWeight="70dp"
+            android:layout_alignRight="@+id/reviewText"
+            android:layout_alignParentEnd="true"
+            />
+
+
+</RelativeLayout>

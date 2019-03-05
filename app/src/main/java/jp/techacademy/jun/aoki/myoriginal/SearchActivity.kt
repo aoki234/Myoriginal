@@ -32,6 +32,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
 
     private val mEventListener = object : ChildEventListener {
+
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
             val map = dataSnapshot.value as Map<String, String>
             val title = map["title"] ?: ""
@@ -65,6 +66,9 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
             val map = dataSnapshot.value as Map<String, String>
 
+
+
+
             // 変更があったQuestionを探す
             for (question in mclasstitleArrayList) {
                 if (dataSnapshot.key.equals(question.questionUid)) {
@@ -83,7 +87,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                             question.answers.add(answer)
                         }
                     }
-
+                    Log.d("debug","changed data called")
                     mAdapter.notifyDataSetChanged()
                 }
             }
@@ -109,10 +113,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         mToolbar = findViewById(R.id.toolbar)
         setSupportActionBar(mToolbar)
 
-
-
-        val messages = intent.extras.get("search_word")
-        Log.d("debug",messages.toString())
+        //Log.d("debug",mclasstitleArrayList.toString())
 
 
         //toolbar.title = messages.toString()
@@ -205,6 +206,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         if (id == R.id.nav_jinka) {
             mToolbar.title = "人間科学部"
             mGenre = 1
+            Log.d("debug",mGenre.toString())
         } else if (id == R.id.nav_sports) {
             mToolbar.title = "スポーツ科学部"
             mGenre = 2
@@ -218,7 +220,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         // --- ここから ---
         // 質問のリストをクリアしてから再度Adapterにセットし、AdapterをListViewにセットし直す
-        //mclasstitleArrayList.clear()
+        mclasstitleArrayList.clear()
         mAdapter.setQuestionArrayList(mclasstitleArrayList)
         Log.d("debug_list",mclasstitleArrayList.toString())
         mListView.adapter = mAdapter
@@ -226,8 +228,10 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         // 選択したジャンルにリスナーを登録する
         if (mGenreRef != null) {
             mGenreRef!!.removeEventListener(mEventListener)
+            Log.d("debug","null genref")
         }
         mGenreRef = mDatabaseReference.child(ContentsPATH).child(mGenre.toString())
+        Log.d("debug",mGenreRef.toString())
         mGenreRef!!.addChildEventListener(mEventListener)
         // --- ここまで追加する ---
 

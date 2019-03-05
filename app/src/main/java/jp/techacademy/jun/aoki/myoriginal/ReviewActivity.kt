@@ -10,9 +10,11 @@ import kotlinx.android.synthetic.main.activity_review.*
 //QuestionDetail
 class ReviewActivity : AppCompatActivity() {
 
-    private lateinit var mQuestion: ClassTitle
+
     private lateinit var mAdapter: ReviewDetailListAdapter
     private lateinit var mAnswerRef: DatabaseReference
+
+    private lateinit var mClassTitle: ClassTitle
 
     private val mEventListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
@@ -20,7 +22,7 @@ class ReviewActivity : AppCompatActivity() {
 
             val answerUid = dataSnapshot.key ?: ""
 
-            for (answer in mQuestion.answers) {
+            for (answer in mClassTitle.answers) {
                 // 同じAnswerUidのものが存在しているときは何もしない
                 if (answerUid == answer.answerUid) {
                     return
@@ -33,8 +35,8 @@ class ReviewActivity : AppCompatActivity() {
             val level = map["level"] ?: ""
             val uid = map["uid"] ?: ""
 
-            val answer = ClassReview(body, name,interest,level, uid, answerUid)
-            mQuestion.answers.add(answer)
+            val answer = ClassReview(body, name, interest, level, uid, answerUid)
+            mClassTitle.answers.add(answer)
             mAdapter.notifyDataSetChanged()
         }
 
@@ -61,12 +63,12 @@ class ReviewActivity : AppCompatActivity() {
 
         // 渡ってきたQuestionのオブジェクトを保持する
         val extras = intent.extras
-        mQuestion = extras.get("question") as ClassTitle
+        mClassTitle = extras.get("question") as ClassTitle
 
-        title = mQuestion.title
+        title = mClassTitle.title
 
         // ListViewの準備
-        mAdapter = ReviewDetailListAdapter(this, mQuestion)
+        mAdapter = ReviewDetailListAdapter(this, mClassTitle)
         listView.adapter = mAdapter
         mAdapter.notifyDataSetChanged()
         fab.setOnClickListener {
@@ -79,12 +81,16 @@ class ReviewActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 // Questionを渡して回答作成画面を起動する
-                // TODO:
+                val intent = Intent(applicationContext, ReviewSendActivity::class.java)
+                intent.putExtra("question", mClassTitle)
+                startActivity(intent)
             }
         }
 
+
         val dataBaseReference = FirebaseDatabase.getInstance().reference
-        mAnswerRef = dataBaseReference.child(ContentsPATH).child(mQuestion.questionUid).child(AnswersPATH)
+        mAnswerRef = dataBaseReference.child(ContentsPATH).child(mClassTitle.questionUid).child(AnswersPATH)
         mAnswerRef.addChildEventListener(mEventListener)
+
     }
 }

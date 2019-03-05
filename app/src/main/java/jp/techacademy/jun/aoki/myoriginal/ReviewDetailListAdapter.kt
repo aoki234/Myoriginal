@@ -1,6 +1,7 @@
 package jp.techacademy.jun.aoki.myoriginal
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,13 +52,13 @@ class ReviewDetailListAdapter(context: Context, private val mclassTitle: ClassTi
             if (convertView == null) {
                 convertView = mLayoutInflater!!.inflate(R.layout.list_reviews_detail, parent, false)!!
             }
-            val body = mclassTitle.body
-            val name = mclassTitle.name
+            val body = mclassTitle.title
+            val name = mclassTitle.teacher
 
-            val bodyTextView = convertView.findViewById<View>(R.id.bodyTextView) as TextView
+            val bodyTextView = convertView.findViewById<View>(R.id.classtitleTextView) as TextView
             bodyTextView.text = body
 
-            val nameTextView = convertView.findViewById<View>(R.id.nameTextView) as TextView
+            val nameTextView = convertView.findViewById<View>(R.id.teacherTextView) as TextView
             nameTextView.text = name
 
         } else {
@@ -67,10 +68,20 @@ class ReviewDetailListAdapter(context: Context, private val mclassTitle: ClassTi
 
             val answer = mclassTitle.answers[position - 1]
             val body = answer.body
+            val interest = answer.interest
+            val level = answer.level
             val name = answer.name
+
+            Log.d("debug",interest.toString())
 
             val bodyTextView = convertView.findViewById<View>(R.id.bodyTextView) as TextView
             bodyTextView.text = body
+
+            val levelTextView = convertView.findViewById<View>(R.id.levelTextView) as TextView
+            levelTextView.text = level.toString()
+
+            val interestTextView = convertView.findViewById<View>(R.id.interestTextView) as TextView
+            interestTextView.text = interest.toString()
 
             val nameTextView = convertView.findViewById<View>(R.id.nameTextView) as TextView
             nameTextView.text = name

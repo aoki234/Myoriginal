@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ProgressBar
@@ -15,11 +14,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_review_send.*
 
-class ReviewSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseReference.CompletionListener  {
+class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListener  {
 
     private lateinit var mclassTitle: ClassTitle
-    private var value_level = 0
-    private var value_interest = 0
+    private var value_level = 50
+    private var value_interest = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +30,7 @@ class ReviewSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRe
         mclassTitle = extras.get("question") as ClassTitle
 
         // UIの準備
-        sendButton.setOnClickListener(this)
+        //sendButton.setOnClickListener(this)
 
         var progressBar = findViewById<ProgressBar>(R.id.Progressbar)
         var progressBar_interest = findViewById<ProgressBar>(R.id.Progressbar_interest)
@@ -43,7 +42,7 @@ class ReviewSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRe
             value_level -= 10
             progressBar.progress = value_level
             // セカンダリ値
-            progressBar.secondaryProgress = 70
+            progressBar.secondaryProgress = 10
         }
 
 
@@ -53,7 +52,7 @@ class ReviewSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRe
             // progress
             progressBar.progress = value_level
             // セカンダリ値
-            progressBar.secondaryProgress = 70
+            progressBar.secondaryProgress = 10
         }
 
 
@@ -65,19 +64,57 @@ class ReviewSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRe
         boring_button.setOnClickListener{
             value_interest -= 10
             // progress
-            progressBar.progress = value_level
+            progressBar_interest.progress = value_interest
             // セカンダリ値
-            progressBar.secondaryProgress = 70
+            progressBar_interest.secondaryProgress = 10
         }
 
 
         var interest_button = findViewById<Button>(R.id.interest)
-        difficult_button.setOnClickListener{
+        interest_button.setOnClickListener{
             value_interest += 10
             // progress
-            progressBar.progress = value_interest
+            progressBar_interest.progress = value_interest
             // セカンダリ値
-            progressBar.secondaryProgress = 70
+            progressBar_interest.secondaryProgress = 10
+        }
+
+
+        var sendbutton = findViewById<Button>(R.id.sendButton)
+        sendbutton.setOnClickListener {
+            // キーボードが出てたら閉じる
+            val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            im.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
+            val dataBaseReference = FirebaseDatabase.getInstance().reference
+            val answerRef = dataBaseReference.child(ContentsPATH).child(mclassTitle.genre.toString()).child(mclassTitle.questionUid).child(AnswersPATH)
+
+            val data = HashMap<String, String>()
+
+            // UID
+            data["uid"] = FirebaseAuth.getInstance().currentUser!!.uid
+
+            // 表示名
+            // Preferenceから名前を取る
+            val sp = PreferenceManager.getDefaultSharedPreferences(this)
+            val name = sp.getString(NameKEY, "")
+            data["name"] = name
+
+            // 回答を取得する
+            val answer = answerEditText.text.toString()
+
+            if (answer.isEmpty()) {
+                // 回答が入力されていない時はエラーを表示するだけ
+                Snackbar.make(it, "回答を入力して下さい", Snackbar.LENGTH_LONG).show()
+                //return
+            }
+            data["body"] = answer
+
+            data["interest"] = value_interest.toString()
+            data["level"] = value_level.toString()
+
+            //progressBar.visibility = View.VISIBLE
+            answerRef.push().setValue(data, this)
         }
     }
 
@@ -93,41 +130,6 @@ class ReviewSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRe
 
     }
 
-    override fun onClick(v: View) {
-        // キーボードが出てたら閉じる
-        val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        im.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-
-        val dataBaseReference = FirebaseDatabase.getInstance().reference
-        val answerRef = dataBaseReference.child(ContentsPATH).child(mclassTitle.genre.toString()).child(mclassTitle.questionUid).child(AnswersPATH)
-
-        val data = HashMap<String, String>()
-
-        // UID
-        data["uid"] = FirebaseAuth.getInstance().currentUser!!.uid
-
-        // 表示名
-        // Preferenceから名前を取る
-        val sp = PreferenceManager.getDefaultSharedPreferences(this)
-        val name = sp.getString(NameKEY, "")
-        data["name"] = name
-
-        // 回答を取得する
-        val answer = answerEditText.text.toString()
-
-        if (answer.isEmpty()) {
-            // 回答が入力されていない時はエラーを表示するだけ
-            Snackbar.make(v, "回答を入力して下さい", Snackbar.LENGTH_LONG).show()
-            return
-        }
-        data["body"] = answer
-
-        data["interest"] = value_interest.toString()
-        data["level"] = value_level.toString()
-
-        //progressBar.visibility = View.VISIBLE
-        answerRef.push().setValue(data, this)
-    }
 
 }
 

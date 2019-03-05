@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ReviewSendActivity">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="レビュー"
+            android:id="@+id/textView"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerEditText"
+            android:maxLines="10"
+            android:layout_below="@+id/textView"
+            />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="楽単度"
+            android:id="@+id/class_level"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/answerEditText"
+            />
+
+    <ProgressBar
+            android:id="@+id/Progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/class_level"
+            android:max="100"
+            android:progress="86"
+    />
+
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="easy"
+            android:layout_below="@+id/Progressbar"
+            android:id="@+id/easy"
+            android:layout_marginTop="5dp"
+            android:textColor="#555"/>
+
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="difficult"
+            android:id="@+id/difficult"
+            android:layout_below="@+id/Progressbar"
+            android:layout_toRightOf="@+id/easy"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#555"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="面白さ"
+            android:id="@+id/interest_bar"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/difficult"
+            />
+
+
+    <ProgressBar
+            android:id="@+id/Progressbar_interest"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/interest_bar"
+            android:max="100"
+            android:progress="86"
+    />
+
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="退屈"
+            android:layout_below="@+id/Progressbar_interest"
+            android:id="@+id/boring"
+            android:layout_marginTop="5dp"
+            android:textColor="#555"/>
+
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="面白い"
+            android:id="@+id/interest"
+            android:layout_below="@+id/Progressbar_interest"
+            android:layout_toRightOf="@+id/boring"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#555"/>
+
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="投稿"
+            android:textColor="#fff"
+            android:background="#222"
+            android:id="@+id/sendButton"
+            android:layout_below="@+id/interest"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            />
+
+</RelativeLayout>

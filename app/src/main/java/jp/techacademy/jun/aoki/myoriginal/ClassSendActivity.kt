@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
@@ -81,6 +82,7 @@ class ClassSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRef
 
 
             genreRef.push().setValue(data, this)
+             Log.d("debug_genre",mGenre.toString())
             progressBar.visibility = View.VISIBLE
         }
     }
