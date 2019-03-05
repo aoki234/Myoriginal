@@ -2,6 +2,7 @@ package jp.techacademy.jun.aoki.myoriginal
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
@@ -31,6 +32,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private var mGenre = 0
 
 
+
     private val mEventListener = object : ChildEventListener {
 
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
@@ -57,7 +59,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 }
             }
 
-            val question = ClassTitle(title, body, teacher,name, uid, dataSnapshot.key ?: "",mGenre, answerArrayList)
+            val question = ClassTitle(title, teacher,body,name, uid, dataSnapshot.key ?: "",mGenre, answerArrayList)
             mclasstitleArrayList.add(question)
             Log.d("debug_added",mclasstitleArrayList.toString())
             mAdapter.notifyDataSetChanged()
@@ -168,6 +170,43 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             val intent = Intent(applicationContext, ReviewActivity::class.java)
             intent.putExtra("question", mclasstitleArrayList[position])
             startActivity(intent)
+        }
+
+        mListView.setOnItemLongClickListener { parent, view, position, id ->
+
+            val sp = PreferenceManager.getDefaultSharedPreferences(this)
+            val username = sp.getString(NameKEY, "")
+
+            Log.d("debug",username.toString())
+
+            if (mclasstitleArrayList[position].name == username){
+                val dialog = android.app.AlertDialog.Builder(parent.context).apply{
+                }
+                dialog.setTitle("登録したこの授業を削除しますか？")
+                dialog.setPositiveButton("OK", { _, positions ->
+                    // OKボタン押したときの処理
+
+                    //授業を削除する
+                    Log.d("debug2",mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mclasstitleArrayList[position].questionUid).toString())
+                    mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mclasstitleArrayList[position].questionUid).removeValue()
+                })
+
+
+                dialog.setNeutralButton("授業を編集する",  {_,_ ->
+                    //編集するため
+                    val intent = Intent(applicationContext, ClassSendActivity::class.java)
+                    intent.putExtra("genre", mGenre)
+                    startActivity(intent)
+
+                })
+
+                dialog.setNegativeButton("キャンセル", null)
+                dialog.show()
+            }else {
+                Snackbar.make(view,"この授業を削除することはできません。",Snackbar.LENGTH_LONG).show()
+            }
+                return@setOnItemLongClickListener true
+
         }
     }
 

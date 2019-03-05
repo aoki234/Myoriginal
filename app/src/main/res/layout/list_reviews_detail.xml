@@ -37,9 +37,8 @@
             android:layout_height="30dp"
             android:text="new"
             android:id="@+id/teacherTextView"
-            android:layout_below="@+id/classtitleTextView"
+            android:layout_below="@+id/classNameTextView"
             android:layout_toRightOf="@+id/teacherTitle"
-            tools:ignore="UnknownId"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"/>
 

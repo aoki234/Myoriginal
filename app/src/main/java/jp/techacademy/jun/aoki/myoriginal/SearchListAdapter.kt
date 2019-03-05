@@ -43,12 +43,14 @@ class SearchListAdapter(context: Context): BaseAdapter(){
         val teacherText = convertView!!.findViewById<View>(R.id.teacherTextView) as TextView
         teacherText.text = mclassTitleArrayList[position].teacher
 
-        val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
-        nameText.text = mclassTitleArrayList[position].name
 
         val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
         val resNum = mclassTitleArrayList[position].answers.size
         resText.text = resNum.toString()
+
+
+        val bodyText = convertView!!.findViewById<View>(R.id.bodyTextView) as TextView
+        bodyText.text = mclassTitleArrayList[position].body
 
 
         return convertView

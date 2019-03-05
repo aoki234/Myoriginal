@@ -39,13 +39,14 @@
             android:text="New Text"
             android:id="@+id/interestTextView"
             android:layout_toRightOf="@+id/interestTitle"
+            android:layout_below="@+id/levelTextView"
             android:inputType="textMultiLine"
     />
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="レビュー"
+            android:text="レビュー："
             android:id="@+id/reviewText"
             android:layout_below="@+id/interestTitle"
     />
