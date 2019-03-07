@@ -36,7 +36,7 @@
             />
 
     <ProgressBar
-            android:id="@+id/Progressbar"
+            android:id="@+id/ProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -46,16 +46,16 @@
     />
 
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="easy"
-            android:layout_below="@+id/Progressbar"
+            android:text="簡単"
+            android:layout_below="@+id/ProgressBar"
             android:id="@+id/easy"
             android:layout_marginTop="5dp"
             android:textColor="#555"/>
 
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="difficult"
+            android:text="難しい"
             android:id="@+id/difficult"
-            android:layout_below="@+id/Progressbar"
+            android:layout_below="@+id/ProgressBar"
             android:layout_toRightOf="@+id/easy"
             android:layout_marginLeft="190dp"
             android:layout_marginTop="5dp"

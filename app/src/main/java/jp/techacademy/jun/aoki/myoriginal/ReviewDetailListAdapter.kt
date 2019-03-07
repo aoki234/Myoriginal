@@ -42,11 +42,14 @@ class ReviewDetailListAdapter(context: Context, private val mclassTitle: ClassTi
     }
 
     override fun getItemId(position: Int): Long {
-        return 0
+        return position.toLong()-1
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
+
+
+
 
         if (getItemViewType(position) == TYPE_QUESTION) {
             if (convertView == null) {
@@ -65,6 +68,9 @@ class ReviewDetailListAdapter(context: Context, private val mclassTitle: ClassTi
             if (convertView == null) {
                 convertView = mLayoutInflater!!.inflate(R.layout.list_answer, parent, false)!!
             }
+
+            convertView.setClickable(false);
+            convertView.setFocusable(false);
 
             val answer = mclassTitle.answers[position - 1]
             val body = answer.body

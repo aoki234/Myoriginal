@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_class_send.*
 class ClassSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseReference.CompletionListener {
 
     private var mGenre: Int = 0
+    private lateinit var mClassTitle: ClassTitle
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +29,19 @@ class ClassSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRef
         // 渡ってきたジャンルの番号を保持する
         val extras = intent.extras
         mGenre = extras.getInt("genre")
+        //授業を編集する際に受け取る
+        if(extras.containsKey("question")) {
+            mClassTitle = extras.get("question") as ClassTitle
+            title = "授業編集"
 
+            classtitleText.setText(mClassTitle.title)
+            teacherText.setText(mClassTitle.teacher)
+            bodyText.setText(mClassTitle.body)
+
+        }else{
+            title = "授業投稿"
+        }
         // UIの準備
-        title = "授業投稿"
         sendButton.setOnClickListener(this)
     }
 
@@ -47,6 +59,7 @@ class ClassSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRef
 
             // UID
             data["uid"] = FirebaseAuth.getInstance().currentUser!!.uid
+
 
             // タイトルと本文を取得する
             val title = classtitleText.text.toString()
@@ -81,8 +94,12 @@ class ClassSendActivity : AppCompatActivity(), View.OnClickListener, DatabaseRef
             data["name"] = name
 
 
-            genreRef.push().setValue(data, this)
-             Log.d("debug_genre",mGenre.toString())
+             if(mClassTitle == null) {
+                 genreRef.push().setValue(data, this)
+                 Log.d("debug_genre", mGenre.toString())
+             }else{
+                 genreRef.child(mClassTitle.questionUid).setValue(data,this)
+             }
             progressBar.visibility = View.VISIBLE
         }
     }

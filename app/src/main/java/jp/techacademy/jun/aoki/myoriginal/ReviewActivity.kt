@@ -2,7 +2,10 @@ package jp.techacademy.jun.aoki.myoriginal
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_review.*
@@ -15,6 +18,7 @@ class ReviewActivity : AppCompatActivity() {
     private lateinit var mAnswerRef: DatabaseReference
 
     private lateinit var mClassTitle: ClassTitle
+    private var mGenre = 0
 
     private val mEventListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
@@ -64,6 +68,8 @@ class ReviewActivity : AppCompatActivity() {
         // 渡ってきたQuestionのオブジェクトを保持する
         val extras = intent.extras
         mClassTitle = extras.get("question") as ClassTitle
+        mGenre = extras.getInt("genre")
+
 
         title = mClassTitle.title
 
@@ -71,6 +77,62 @@ class ReviewActivity : AppCompatActivity() {
         mAdapter = ReviewDetailListAdapter(this, mClassTitle)
         listView.adapter = mAdapter
         mAdapter.notifyDataSetChanged()
+
+        val mDatabaseReference = FirebaseDatabase.getInstance().reference
+
+
+       // mAdapter.getItemViewType()
+
+        listView.setOnItemLongClickListener { parent, view, position, id ->
+
+            val sp = PreferenceManager.getDefaultSharedPreferences(this)
+            val username = sp.getString(NameKEY, "")
+
+            Log.d("debug3",mClassTitle.answers[position-1].toString())
+            Log.d("deebug_position",position.toString())
+
+            if (mClassTitle.answers[position-1].name == username){
+                val dialog = android.app.AlertDialog.Builder(parent.context).apply{
+                }
+
+                dialog.setTitle("登録したこのレビューを削除しますか？")
+                dialog.setPositiveButton("OK", { _, positions ->
+                    // OKボタン押したときの処理
+
+                    //授業を削除する
+                    Log.d("debug2",mClassTitle.answers[position-1].toString())
+                    Log.d("debug21",mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mClassTitle.questionUid).toString())
+
+                    Log.d("debug2",mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mClassTitle.questionUid).child("answers").child(mClassTitle.answers[position-1].answerUid).toString())
+
+                    mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mClassTitle.questionUid).child("answers").child(mClassTitle.answers[position-1].answerUid).removeValue()
+
+                    //再度アダプターをセットする
+                    mClassTitle.answers.removeAt(position-1)
+                    //mAdapter.setQue(mclasstitleArrayList)
+                    mAdapter = ReviewDetailListAdapter(this, mClassTitle)
+                    listView.adapter = mAdapter
+                })
+
+
+                dialog.setNeutralButton("レビューを編集する",  {_,_ ->
+                    //編集するため
+                    val intent = Intent(applicationContext, ReviewSendActivity::class.java)
+                    intent.putExtra("genre", mGenre)
+                    intent.putExtra("question",mClassTitle)
+                    intent.putExtra("question_answer",mClassTitle.answers[position-1])
+                    startActivity(intent)
+
+                })
+
+                dialog.setNegativeButton("キャンセル", null)
+                dialog.show()
+            }else {
+                Snackbar.make(view,"あなたはこのレビューを削除することはできません。", Snackbar.LENGTH_LONG).show()
+            }
+            return@setOnItemLongClickListener true
+        }
+
         fab.setOnClickListener {
             // ログイン済みのユーザーを取得する
             val user = FirebaseAuth.getInstance().currentUser

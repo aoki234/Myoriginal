@@ -169,6 +169,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             // Questionのインスタンスを渡して質問詳細画面を起動する
             val intent = Intent(applicationContext, ReviewActivity::class.java)
             intent.putExtra("question", mclasstitleArrayList[position])
+            intent.putExtra("genre",mGenre)
             startActivity(intent)
         }
 
@@ -189,6 +190,11 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     //授業を削除する
                     Log.d("debug2",mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mclasstitleArrayList[position].questionUid).toString())
                     mDatabaseReference.child(ContentsPATH).child(mGenre.toString()).child(mclasstitleArrayList[position].questionUid).removeValue()
+
+                    //再度アダプターをセットする
+                    mclasstitleArrayList.removeAt(position)
+                    mAdapter.setQuestionArrayList(mclasstitleArrayList)
+                    mListView.adapter = mAdapter
                 })
 
 
@@ -196,6 +202,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     //編集するため
                     val intent = Intent(applicationContext, ClassSendActivity::class.java)
                     intent.putExtra("genre", mGenre)
+                    intent.putExtra("question",mclasstitleArrayList[position])
                     startActivity(intent)
 
                 })

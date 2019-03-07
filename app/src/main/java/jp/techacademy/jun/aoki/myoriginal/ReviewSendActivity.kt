@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.ProgressBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -17,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_review_send.*
 class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListener  {
 
     private lateinit var mclassTitle: ClassTitle
+    private var mclassReview: ClassReview? = null
     private var value_level = 50
     private var value_interest = 50
 
@@ -32,17 +32,29 @@ class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListe
         // UIの準備
         //sendButton.setOnClickListener(this)
 
-        var progressBar = findViewById<ProgressBar>(R.id.Progressbar)
-        var progressBar_interest = findViewById<ProgressBar>(R.id.Progressbar_interest)
+        if(extras.get("question_answer") != null){
+            mclassReview = extras.get("question_answer") as ClassReview
+            title = "レビュー修正"
 
-        progressBar.setMax(100)
+            answerEditText.setText(mclassReview!!.body)
+            ProgressBar.setProgress(mclassReview!!.level.toInt())
+            Progressbar_interest.setProgress(mclassReview!!.interest.toInt())
+        }else{
+            title = "レビュー作成"
+        }
+
+
+        //var progressBar = findViewById<ProgressBar>(R.id.Progressbar)
+        //var progressBar_interest = findViewById<ProgressBar>(R.id.Progressbar_interest)
+
+        ProgressBar.setMax(100)
         //progressBar.setProgress( 81,true)
         var easy_button = findViewById<Button>(R.id.easy)
         easy_button.setOnClickListener{
             value_level -= 10
-            progressBar.progress = value_level
+            ProgressBar.progress = value_level
             // セカンダリ値
-            progressBar.secondaryProgress = 10
+            ProgressBar.secondaryProgress = 10
         }
 
 
@@ -50,13 +62,13 @@ class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListe
         difficult_button.setOnClickListener{
             value_level += 10
             // progress
-            progressBar.progress = value_level
+            ProgressBar.progress = value_level
             // セカンダリ値
-            progressBar.secondaryProgress = 10
+            ProgressBar.secondaryProgress = 10
         }
 
 
-        progressBar_interest.setMax(100)
+        Progressbar_interest.setMax(100)
 
         //progressBar.setProgress( 81,true)
         var boring_button = findViewById<Button>(R.id.boring)
@@ -64,9 +76,9 @@ class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListe
         boring_button.setOnClickListener{
             value_interest -= 10
             // progress
-            progressBar_interest.progress = value_interest
+            Progressbar_interest.progress = value_interest
             // セカンダリ値
-            progressBar_interest.secondaryProgress = 10
+            Progressbar_interest.secondaryProgress = 10
         }
 
 
@@ -74,9 +86,9 @@ class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListe
         interest_button.setOnClickListener{
             value_interest += 10
             // progress
-            progressBar_interest.progress = value_interest
+            Progressbar_interest.progress = value_interest
             // セカンダリ値
-            progressBar_interest.secondaryProgress = 10
+            Progressbar_interest.secondaryProgress = 10
         }
 
 
@@ -114,7 +126,11 @@ class ReviewSendActivity : AppCompatActivity(),DatabaseReference.CompletionListe
             data["level"] = value_level.toString()
 
             //progressBar.visibility = View.VISIBLE
-            answerRef.push().setValue(data, this)
+            if(mclassReview == null) {
+                answerRef.push().setValue(data, this)
+            }else{
+                answerRef.child(mclassReview!!.answerUid).setValue(data,this)
+            }
         }
     }
 
