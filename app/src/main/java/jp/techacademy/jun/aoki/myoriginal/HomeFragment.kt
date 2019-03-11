@@ -27,8 +27,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    val gridlist = ArrayList<String>()
-    val members = arrayOf("yumiko", "yuka", "mai", "nagi", "toko", "kurumi", "miki", "saya", "yuyu", "katakuriko")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -127,6 +125,8 @@ class HomeFragment : Fragment() {
         mRealm.copyToRealmOrUpdate(zyugyo)
         mRealm.commitTransaction()
     }
+
+
 
 }
 
