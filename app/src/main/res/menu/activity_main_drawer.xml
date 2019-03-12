@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_jinka"
+                android:title="人間科学"/>
+        <item
+                android:id="@+id/nav_sports"
+                android:title="スポーツ科学"/>
+        <item
+                android:id="@+id/nav_other"
+                android:title="他箇所設置"/>
+    </group>
+</menu>
