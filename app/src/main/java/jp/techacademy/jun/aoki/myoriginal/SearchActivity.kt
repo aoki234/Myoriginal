@@ -13,6 +13,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -31,6 +35,7 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private var mGenreRef: DatabaseReference? = null
     private var mGenre = 0
 
+    lateinit var mAdView:AdView
 
 
     private val mEventListener = object : ChildEventListener {
@@ -117,6 +122,35 @@ class SearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         //Log.d("debug",mclasstitleArrayList.toString())
 
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713")
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        mAdView.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdFailedToLoad(errorCode : Int) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        }
 
         //toolbar.title = messages.toString()
         //setSupportActionBar(toolbar)

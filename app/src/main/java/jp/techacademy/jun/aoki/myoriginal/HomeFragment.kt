@@ -13,12 +13,18 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import io.realm.Realm
 import io.realm.RealmChangeListener
 
 class HomeFragment : Fragment() {
 
     private lateinit var mgridAdapter: HomeAdapter
+
+    lateinit var mAdView:AdView
 
     private lateinit var mRealm: Realm
     private val mRealmListener = object : RealmChangeListener<Realm> {
@@ -53,6 +59,37 @@ class HomeFragment : Fragment() {
         gridview.stretchMode = GridView.STRETCH_COLUMN_WIDTH
 
         reloadListView()
+
+
+        MobileAds.initialize(context, "ca-app-pub-3940256099942544~3347511713")
+
+        mAdView = v.findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        mAdView.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdFailedToLoad(errorCode : Int) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        }
 
 
         gridview.setOnItemClickListener { parent, view, position, id ->

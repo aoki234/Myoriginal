@@ -25,18 +25,23 @@ class DashboardFragment : Fragment() {
 
 
 
-        webView = v.findViewById(R.id.web_view)
+        webView = v.findViewById<WebView>(R.id.web_view)
 
         //Web内のリンクをタップしたときなどに標準ブラウザを起動しないように設定
         webView!!.setWebViewClient(WebViewClient())
 
         //jacascriptを許可する
         webView!!.getSettings().javaScriptEnabled = true
+
         webView!!.setVerticalScrollBarEnabled(false)
         webView!!.setHorizontalScrollBarEnabled(false)
 
         // Google表示
         webView!!.loadUrl("https://www.wsl.waseda.jp/syllabus/JAA101.php")
+
+        //webView!!.getSettings().setLoadWithOverviewMode(true);
+        webView!!.getSettings().setUseWideViewPort(true);
+        webView!!.setInitialScale(100)
 
         webView!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
