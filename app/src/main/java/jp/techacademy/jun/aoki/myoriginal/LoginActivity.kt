@@ -18,7 +18,7 @@ import java.util.*
 
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via em
  */
 class LoginActivity : AppCompatActivity(){
     private lateinit var mAuth: FirebaseAuth

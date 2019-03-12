@@ -40,7 +40,7 @@ class DashboardFragment : Fragment() {
         webView!!.loadUrl("https://www.wsl.waseda.jp/syllabus/JAA101.php")
 
         //webView!!.getSettings().setLoadWithOverviewMode(true);
-        webView!!.getSettings().setUseWideViewPort(true);
+        //webView!!.getSettings().setUseWideViewPort(true);
         webView!!.setInitialScale(100)
 
         webView!!.setOnTouchListener(object : View.OnTouchListener {
